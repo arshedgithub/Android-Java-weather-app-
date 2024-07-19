@@ -11,6 +11,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +47,24 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             TextView txtTitle = findViewById(R.id.txtTitle);
-            txtTitle.setText(forecastJsonStr);
+            try {
+                JSONObject data = new JSONObject(forecastJsonStr);
+                JSONArray weatherArray = data.getJSONArray("weather");
+                JSONObject weather = weatherArray.getJSONObject(0);
+                JSONObject main = data.getJSONObject("main");
+
+                String weatherCondition = weather.getString("main");
+                String weatherDesc = weather.getString("description");
+                String weatherIcon = weather.getString("icon");
+                Integer temp = main.getInt("temp");
+                Integer pressure = main.getInt("pressure");
+                Integer humidity = main.getInt("humidity");
+
+                txtTitle.setText(temp.toString());
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
