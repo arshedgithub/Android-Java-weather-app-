@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            TextView txtTitle = findViewById(R.id.txtTitle);
+            TextView weatherTitleView = findViewById(R.id.weatherCondition);
+            TextView weatherDescView = findViewById(R.id.weatherDesc);
+            TextView temp_value = findViewById(R.id.temp_value);
+            TextView pressure_value = findViewById(R.id.pressure_value);
             try {
                 JSONObject data = new JSONObject(forecastJsonStr);
                 JSONArray weatherArray = data.getJSONArray("weather");
@@ -60,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 Integer pressure = main.getInt("pressure");
                 Integer humidity = main.getInt("humidity");
 
-                txtTitle.setText(temp.toString());
+                weatherTitleView.setText(weatherCondition);
+                weatherDescView.setText(weatherDesc);
+                temp_value.setText(temp.toString() + "K");
+                pressure_value.setText(pressure.toString() + "Pa");
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
