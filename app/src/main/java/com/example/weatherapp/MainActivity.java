@@ -103,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-
                 }
-
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
