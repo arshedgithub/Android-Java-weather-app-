@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                final String BASE_URL = "https://api.openweathermap.org/data/2.5/forecast?q=london&appid=885b3755570c3648e3bc3453fb4a5f31";
+                final String BASE_URL = "https://api.openweathermap.org/data/2.5/forecast?q=london&cnt=20&appid=885b3755570c3648e3bc3453fb4a5f31";
                 URL url = new URL(BASE_URL);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
