@@ -43,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
     String date;
     String windSpeed;
 
+    String[] weather_arr = new String[20];
+    String[] weatherDesc_arr = new String[20];
+    String[] weatherTemp_arr = new String[20];
+    String[] weatherPressure_arr = new String[20];
+    String[] weatherHumid_arr = new String[20];
+    String[] weatherWind_arr = new String[20];
+    String[] weatherIcon_arr = new String[20];
+    String[] weatherDate_arr = new String[20];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +89,14 @@ public class MainActivity extends AppCompatActivity {
                         windSpeed = tempObj.getJSONObject("wind").getString("speed");
                         date = tempObj.getString("dt_txt");
 
+                        weather_arr[i] = weather;
+                        weatherDesc_arr[i] = desc;
+                        weatherTemp_arr[i] = temp;
+                        weatherPressure_arr[i] = pressure;
+                        weatherHumid_arr[i] = humidity;
+                        weatherWind_arr[i] = windSpeed;
+                        weatherDate_arr[i] = date;
+
                         weatherData = new Weather(R.drawable.pic_10d, weather, desc, temp, pressure, humidity, windSpeed, date);
                         weatherArrayList.add(weatherData);
                     }
@@ -92,14 +109,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             Intent intent = new Intent(MainActivity.this, Detailed_weather.class);
-                            intent.putExtra("weather", weather);
-                            intent.putExtra("desc", desc);
-                            intent.putExtra("weatherIcon", weatherIcon);
-                            intent.putExtra("temp", temp);
-                            intent.putExtra("pressure", pressure);
-                            intent.putExtra("humidity", humidity);
-                            intent.putExtra("windSpeed", windSpeed);
-                            intent.putExtra("date", date);
+                            intent.putExtra("weather", weather_arr[i]);
+                            intent.putExtra("desc", weatherDesc_arr[i]);
+                            intent.putExtra("weatherIcon", weatherIcon_arr[i]);
+                            intent.putExtra("temp", weatherTemp_arr[i]);
+                            intent.putExtra("pressure", weatherPressure_arr[i]);
+                            intent.putExtra("humidity", weatherHumid_arr[i]);
+                            intent.putExtra("windSpeed", weatherWind_arr[i]);
+                            intent.putExtra("date", weatherDate_arr[i]);
                             startActivity(intent);
                         }
                     });
