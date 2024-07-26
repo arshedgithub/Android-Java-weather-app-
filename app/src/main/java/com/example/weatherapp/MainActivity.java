@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -46,25 +48,30 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             TextView weatherTitleView = findViewById(R.id.weatherCondition);
             TextView weatherDescView = findViewById(R.id.weatherDesc);
-            TextView temp_value = findViewById(R.id.temp_value);
-            TextView pressure_value = findViewById(R.id.pressure_value);
+
             try {
-                JSONObject data = new JSONObject(forecastJsonStr);
-                JSONArray weatherArray = data.getJSONArray("weather");
-                JSONObject weather = weatherArray.getJSONObject(0);
-                JSONObject main = data.getJSONObject("main");
+                JSONObject forecastResponse = new JSONObject(forecastJsonStr);
+                if (Integer.parseInt(forecastResponse.getString("cod")) == 404){
+                    Toast.makeText(MainActivity.this, "City Not found", Toast.LENGTH_SHORT).show();
+                } else if (Integer.parseInt(forecastResponse.getString("cod")) == 200){
+                    JSONObject forecastData = forecastResponse.getJSONArray("list").getJSONObject(0);
+                    weatherDescView.setText(forecastData.toString());
 
-                String weatherCondition = weather.getString("main");
-                String weatherDesc = weather.getString("description");
-                String weatherIcon = weather.getString("icon");
-                Integer temp = main.getInt("temp");
-                Integer pressure = main.getInt("pressure");
-                Integer humidity = main.getInt("humidity");
+                }
 
-                weatherTitleView.setText(weatherCondition);
-                weatherDescView.setText(weatherDesc);
-                temp_value.setText(temp.toString() + "K");
-                pressure_value.setText(pressure.toString() + "Pa");
+//                JSONArray weatherArray = data.getJSONArray("weather");
+//                JSONObject weather = weatherArray.getJSONObject(0);
+//                JSONObject main = data.getJSONObject("main");
+
+//                String weatherCondition = weather.getString("main");
+//                String weatherDesc = weather.getString("description");
+//                String weatherIcon = weather.getString("icon");
+//                Integer temp = main.getInt("temp");
+//                Integer pressure = main.getInt("pressure");
+//                Integer humidity = main.getInt("humidity");
+//
+//                weatherTitleView.setText(weatherCondition);
+//                weatherDescView.setText(weatherDesc);
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -111,5 +118,9 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void showWeatherList(JSONObject data){
+        
     }
 }
