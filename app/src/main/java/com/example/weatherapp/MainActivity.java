@@ -1,12 +1,16 @@
 package com.example.weatherapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.weatherapp.databinding.ActivityMainBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     BufferedReader reader;
     String forecastJsonStr;
     public ArrayList<Weather> weatherArrayList = new ArrayList<>();
+    WeatherAdapter weatherAdapter;
+    Weather weatherData;
+    ActivityMainBinding binding;
 
     String weather;
     String desc;
@@ -36,15 +43,11 @@ public class MainActivity extends AppCompatActivity {
     String date;
     String windSpeed;
 
-    int[] forecastIcons = new int[20];
-    String[] forecastTime = new String[20];
-    String[] forecastTemp = new String[20];
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         FetchData fetchData = new FetchData();
         fetchData.execute();
@@ -58,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            TextView weatherTitleView = findViewById(R.id.weatherCondition);
-            TextView weatherDescView = findViewById(R.id.weatherDesc);
 
             try {
                 JSONObject forecastResponse = new JSONObject(forecastJsonStr);
@@ -69,20 +70,41 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray forecastResponseJSONArray = forecastResponse.getJSONArray("list");
                     for (int i = 0; i < forecastResponseJSONArray.length(); i++) {
                         JSONObject tempObj = forecastResponseJSONArray.getJSONObject(i);
-                        weather = tempObj.getJSONObject("weather").getString("main");
-                        desc = tempObj.getJSONObject("weather").getString("description");
-                        weatherIcon = tempObj.getJSONObject("weather").getString("icon");
+
+                        weather = tempObj.getJSONArray("weather").getJSONObject(0).getString("main");
+                        desc = tempObj.getJSONArray("weather").getJSONObject(0).getString("description");
+                        weatherIcon = tempObj.getJSONArray("weather").getJSONObject(0).getString("icon");
                         temp = tempObj.getJSONObject("main").getString("temp");
                         pressure = tempObj.getJSONObject("main").getString("pressure");
                         humidity = tempObj.getJSONObject("main").getString("humidity");
                         windSpeed = tempObj.getJSONObject("wind").getString("speed");
                         date = tempObj.getString("dt_txt");
+
+                        weatherData = new Weather(R.drawable.pic_10d, weather, desc, temp, pressure, humidity, windSpeed, date);
+                        weatherArrayList.add(weatherData);
                     }
 
-                }
+                    weatherAdapter = new WeatherAdapter(MainActivity.this, weatherArrayList);
+                    binding.forecastList.setAdapter(weatherAdapter);
+                    binding.forecastList.setClickable(true);
 
-//                weatherTitleView.setText(weatherCondition);
-//                weatherDescView.setText(weatherDesc);
+                    binding.forecastList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent = new Intent(MainActivity.this, Detailed_weather.class);
+                            intent.putExtra("weather", weather);
+                            intent.putExtra("desc", desc);
+                            intent.putExtra("weatherIcon", weatherIcon);
+                            intent.putExtra("temp", temp);
+                            intent.putExtra("pressure", pressure);
+                            intent.putExtra("humidity", humidity);
+                            intent.putExtra("windSpeed", windSpeed);
+                            intent.putExtra("date", date);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
 
             } catch (JSONException e) {
                 throw new RuntimeException(e);
@@ -131,7 +153,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showWeatherList(JSONObject data){
-
-    }
 }

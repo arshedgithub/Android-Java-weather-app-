@@ -36,7 +36,8 @@ public class WeatherAdapter extends ArrayAdapter {
 
         weatherIcon.setImageResource(weatherData.icon);
         weatherDate.setText(weatherData.weatherDate);
-        weatherTemp.setText(weatherData.temp);
+        int temp = (int)(Float.parseFloat(weatherData.temp) - 273);
+        weatherTemp.setText(String.valueOf(temp) + '\u2103');
 
         return convertView;
     }

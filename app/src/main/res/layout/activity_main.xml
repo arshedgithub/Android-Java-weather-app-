@@ -8,44 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/mainCard"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:elevation="5sp"
-        app:cardCornerRadius="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_margin="15dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_margin="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:src="@drawable/pic_01d" />
-
-            <TextView
-                android:id="@+id/weatherCondition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="35dp"
-                android:textAlignment="center"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/weatherDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textSize="25dp" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
     <ListView
         android:id="@+id/forecast_list"
         android:layout_width="match_parent"
@@ -54,3 +16,41 @@
 
 
 </LinearLayout>
+
+<!--<androidx.cardview.widget.CardView-->
+<!--android:id="@+id/mainCard"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="350dp"-->
+<!--android:elevation="5sp"-->
+<!--app:cardCornerRadius="20dp"-->
+<!--android:layout_marginTop="20dp"-->
+<!--android:layout_margin="15dp">-->
+
+<!--<LinearLayout-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical">-->
+
+<!--    <ImageView-->
+<!--        android:layout_margin="20dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="180dp"-->
+<!--        android:src="@drawable/pic_01d" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/weatherCondition"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="35dp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textStyle="bold" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/weatherDesc"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="25dp" />-->
+
+<!--</LinearLayout>-->
+<!--</androidx.cardview.widget.CardView>-->
