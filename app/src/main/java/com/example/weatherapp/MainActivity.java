@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
     BufferedReader reader;
     String forecastJsonStr;
 
+    int[] forecastIcons = new int[20];
+    String[] forecastTime = new String[20];
+    String[] forecastTemp = new String[20];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
