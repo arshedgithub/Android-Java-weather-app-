@@ -4,12 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -76,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                final String BASE_URL = "https://api.openweathermap.org/data/2.5/weather?q=london&appid=885b3755570c3648e3bc3453fb4a5f31";
+                final String BASE_URL = "https://api.openweathermap.org/data/2.5/forecast?q=london&appid=885b3755570c3648e3bc3453fb4a5f31";
                 URL url = new URL(BASE_URL);
 
                 urlConnection = (HttpURLConnection) url.openConnection();
