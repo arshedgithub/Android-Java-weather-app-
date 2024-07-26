@@ -18,12 +18,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     HttpURLConnection urlConnection;
     BufferedReader reader;
     String forecastJsonStr;
+    public ArrayList<Weather> weatherArrayList = new ArrayList<>();
+
+    String weather;
+    String desc;
+    String temp;
+    String pressure;
+    String humidity;
+    String weatherIcon;
+    String date;
+    String windSpeed;
 
     int[] forecastIcons = new int[20];
     String[] forecastTime = new String[20];
@@ -32,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         FetchData fetchData = new FetchData();
@@ -54,22 +66,21 @@ public class MainActivity extends AppCompatActivity {
                 if (Integer.parseInt(forecastResponse.getString("cod")) == 404){
                     Toast.makeText(MainActivity.this, "City Not found", Toast.LENGTH_SHORT).show();
                 } else if (Integer.parseInt(forecastResponse.getString("cod")) == 200){
-                    JSONObject forecastData = forecastResponse.getJSONArray("list").getJSONObject(0);
-                    weatherDescView.setText(forecastData.toString());
+                    JSONArray forecastResponseJSONArray = forecastResponse.getJSONArray("list");
+                    for (int i = 0; i < forecastResponseJSONArray.length(); i++) {
+                        JSONObject tempObj = forecastResponseJSONArray.getJSONObject(i);
+                        weather = tempObj.getJSONObject("weather").getString("main");
+                        desc = tempObj.getJSONObject("weather").getString("description");
+                        weatherIcon = tempObj.getJSONObject("weather").getString("icon");
+                        temp = tempObj.getJSONObject("main").getString("temp");
+                        pressure = tempObj.getJSONObject("main").getString("pressure");
+                        humidity = tempObj.getJSONObject("main").getString("humidity");
+                        windSpeed = tempObj.getJSONObject("wind").getString("speed");
+                        date = tempObj.getString("dt_txt");
+                    }
 
                 }
 
-//                JSONArray weatherArray = data.getJSONArray("weather");
-//                JSONObject weather = weatherArray.getJSONObject(0);
-//                JSONObject main = data.getJSONObject("main");
-
-//                String weatherCondition = weather.getString("main");
-//                String weatherDesc = weather.getString("description");
-//                String weatherIcon = weather.getString("icon");
-//                Integer temp = main.getInt("temp");
-//                Integer pressure = main.getInt("pressure");
-//                Integer humidity = main.getInt("humidity");
-//
 //                weatherTitleView.setText(weatherCondition);
 //                weatherDescView.setText(weatherDesc);
 
@@ -121,6 +132,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showWeatherList(JSONObject data){
-        
+
     }
 }
