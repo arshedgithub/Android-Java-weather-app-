@@ -15,6 +15,13 @@
         android:theme="@style/Theme.WeatherApp"
         tools:targetApi="31">
         <activity
+            android:name=".Info"
+            android:exported="false"
+            android:theme="@style/Theme.WeatherApp" />
+        <activity
+            android:name=".Setting"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

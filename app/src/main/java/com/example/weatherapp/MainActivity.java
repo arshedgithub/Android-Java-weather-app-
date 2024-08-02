@@ -4,9 +4,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     String desc;
     String temp;
     String pressure;
+
     String humidity;
     String weatherIcon;
     String date;
@@ -60,6 +67,24 @@ public class MainActivity extends AppCompatActivity {
 
         FetchData fetchData = new FetchData();
         fetchData.execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.setting) {
+            Intent intent = new Intent(MainActivity.this, Setting.class);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.info) {
+            Intent intent = new Intent(MainActivity.this, Info.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public class FetchData extends AsyncTask<String, Void, String>{
